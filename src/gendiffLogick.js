@@ -3,14 +3,7 @@
 import { readFileSync } from "fs";
 
 import _ from "lodash";
-export default function (filepath1, filepath2) {
-const file1 = readFileSync(filepath1, "utf-8");
-const file2 = readFileSync(filepath2, "utf-8");
-const parseFile1 = JSON.parse(file1);
-const parseFile2 = JSON.parse(file2);
-
-console.log(parseFile1,parseFile2);
-};
+ 
 const genDiff = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
@@ -31,3 +24,10 @@ const genDiff = (data1, data2) => {
   
     return result;
   };
+  export default function (filepath1, filepath2) {
+    const file1 = readFileSync(filepath1, "utf-8");
+    const file2 = readFileSync(filepath2, "utf-8");
+    const parseFile1 = JSON.parse(file1);
+    const parseFile2 = JSON.parse(file2);
+    console.log(genDiff(parseFile1,parseFile2))
+    };
