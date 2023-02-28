@@ -7,19 +7,22 @@ import _ from "lodash";
 const genDiff = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
-    const keys = _.union(keys1, keys2); 
-  
+    const unionKeys = _.union(keys1, keys2); 
+    const sortedKeys = _.sortBy((unionKeys), key => key);
     const result = {};
-    for (const key of keys) {
+    for (const key of sortedKeys) {
       if (!Object.hasOwn(data1, key)) {
-        result[key] = 'added';
+        result[`${'+'}  ${key}`] = data2[key];
       } else if (!Object.hasOwn(data2, key)) {
-        result[key] = 'deleted';
+        result[`${'-'}  ${key}`] = data1[key];
+      } else if (data1[key] === data2[key]) {
+        result[`${''}  ${key}`] = data1[key]; 
       } else if (data1[key] !== data2[key]) {
-        result[key] = 'changed';
-      } else {
-        result[key] = 'unchanged';
-      }
+        console.log('data1[key]:', data1[key])
+        console.log('data2[key]:', data2[key])
+        result[`${'-'}  ${key}`] = data1[key];
+        result[`${'+'}  ${key}`] = data2[key];
+      } 
     }
   
     return result;
@@ -31,3 +34,12 @@ const genDiff = (data1, data2) => {
     const parseFile2 = JSON.parse(file2);
     console.log(genDiff(parseFile1,parseFile2))
     };
+   
+    
+    // if (value1 === value2) result[`  ${key}`] = value1;
+    // if (keys1.includes(key) && !keys2.includes(key)) result[`- ${key}`] = value1;
+    // if (!keys1.includes(key) && keys2.includes(key)) result[`+ ${key}`] = value2;
+    // if (keys1.includes(key) && keys2.includes(key) && value1 !== value2) {
+    //   result[`- ${key}`] = value1;
+    //   result[`+ ${key}`] = value2;
+    // }
