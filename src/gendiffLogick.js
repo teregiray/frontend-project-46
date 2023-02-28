@@ -4,7 +4,7 @@ import { readFileSync } from "fs";
 
 import _ from "lodash";
  
-const genDiff = (data1, data2) => {
+const diffVerser = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
     const unionKeys = _.union(keys1, keys2); 
@@ -47,11 +47,12 @@ const genDiff = (data1, data2) => {
     return iter(value, 1);
   };
 
-  export default function (filepath1, filepath2) {
+  export default function genDiff (filepath1, filepath2) {
     const file1 = readFileSync(filepath1, "utf-8");
     const file2 = readFileSync(filepath2, "utf-8");
     const parseFile1 = JSON.parse(file1);
     const parseFile2 = JSON.parse(file2);
-    console.log(stringify(genDiff(parseFile1,parseFile2)))
-    };
-   
+    console.log(stringify(diffVerser(parseFile1,parseFile2)))
+    }
+
+  module.exports = genDiff;
