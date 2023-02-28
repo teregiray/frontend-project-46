@@ -16,30 +16,42 @@ const genDiff = (data1, data2) => {
       } else if (!Object.hasOwn(data2, key)) {
         result[`${'-'}  ${key}`] = data1[key];
       } else if (data1[key] === data2[key]) {
-        result[`${''}  ${key}`] = data1[key]; 
+        result[`${' '}  ${key}`] = data1[key]; 
       } else if (data1[key] !== data2[key]) {
-        console.log('data1[key]:', data1[key])
-        console.log('data2[key]:', data2[key])
         result[`${'-'}  ${key}`] = data1[key];
         result[`${'+'}  ${key}`] = data2[key];
       } 
     }
   
-    return result;
+    return result
   };
+
+  const stringify = (value, replacer = ' ', spacesCount = 1) => {
+    const iter = (currentValue, depth) => {
+      if (typeof currentValue !== 'object' || currentValue === null) {
+        return `${currentValue}`;
+      }
+  
+      const indentSize = depth * spacesCount;
+      const currentIndent = replacer.repeat(indentSize);
+      const bracketIndent = replacer.repeat(indentSize - spacesCount);
+      const lines = Object.entries(currentValue).map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+  
+      return [
+        '{',
+        ...lines,
+        `${bracketIndent}}`,  
+      ].join('\n');
+    };
+  
+    return iter(value, 1);
+  };
+
   export default function (filepath1, filepath2) {
     const file1 = readFileSync(filepath1, "utf-8");
     const file2 = readFileSync(filepath2, "utf-8");
     const parseFile1 = JSON.parse(file1);
     const parseFile2 = JSON.parse(file2);
-    console.log(genDiff(parseFile1,parseFile2))
+    console.log(stringify(genDiff(parseFile1,parseFile2)))
     };
    
-    
-    // if (value1 === value2) result[`  ${key}`] = value1;
-    // if (keys1.includes(key) && !keys2.includes(key)) result[`- ${key}`] = value1;
-    // if (!keys1.includes(key) && keys2.includes(key)) result[`+ ${key}`] = value2;
-    // if (keys1.includes(key) && keys2.includes(key) && value1 !== value2) {
-    //   result[`- ${key}`] = value1;
-    //   result[`+ ${key}`] = value2;
-    // }
