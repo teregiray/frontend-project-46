@@ -1,15 +1,22 @@
-// const genDiff = require('../src/gendiffLogick');
-import genDiff from '../src/gendiffLogick.js'
-const file1 = require('../__fixtures__/file1.json');
-const file2 = require('../__fixtures__/file2.json');
-const result = require('../__fixtures__/etalonFile.json');
+import genDiff from '../src/gendiffLogick.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { readFileSync } from 'fs';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+
 describe('genDiff', () => {
     test("Тест 1", () => {
-        expect(genDiff(file1,file2)).toEqual(result)
-    })  
-})
+        const filePath1 = getFixturePath('file1.json');
+        const filePath2 = getFixturePath('file2.json');
+        const expectedResult = readFile('expected_file.json');
+        expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
+    });
+});
 
-// 1)Временный костыль для запуска jest с ключами --experimental-vm-modules и, опционально, --no-warnings;
-//  загуглить и найти/либос верить с эталонным репозиторием
-// 2)Узнать что такое dirname, прочитать статью на хекслете
-// 3)Как-то это скомбинировать и написать тесты(разбить этот шаг на несколько шагов)
+// Для начала тесты запускаются в корневом каталоге:
+
+// project$ npx -n --experimental-vm-modules jest
