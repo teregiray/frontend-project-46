@@ -26,7 +26,7 @@ const diffVerser = (data1, data2) => {
     return result
   };
 
-  const stringify = (value, replacer = ' ', spacesCount = 1) => {
+  export const stringify = (value, replacer = ' ', spacesCount = 1) => {
     const iter = (currentValue, depth) => {
       if (typeof currentValue !== 'object' || currentValue === null) {
         return `${currentValue}`;
@@ -52,7 +52,7 @@ const diffVerser = (data1, data2) => {
     const file2 = readFileSync(filepath2, "utf-8");
     const parseFile1 = JSON.parse(file1);
     const parseFile2 = JSON.parse(file2);
-    console.log(stringify(diffVerser(parseFile1,parseFile2)))
+    return stringify(diffVerser(parseFile1,parseFile2))
     }
 
   // module.exports = genDiff;
