@@ -6,7 +6,7 @@ import { stringify } from '../src/gendiffLogick.js';
 import exp from 'constants';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log(genDiff(readFile("file1.json","file2.json")))
+// console.log(genDiff(readFile("file1.json","file2.json")))
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
