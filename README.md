@@ -3,6 +3,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/b10a85356d5950a188a3/maintainability)](https://codeclimate.com/github/teregiray/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b10a85356d5950a188a3/test_coverage)](https://codeclimate.com/github/teregiray/frontend-project-46/test_coverage)
 
+Project description: It's my second Hexlet js project
+
 ## Setup
 
 ```bash
