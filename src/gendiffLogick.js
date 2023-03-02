@@ -55,4 +55,3 @@ const diffVerser = (data1, data2) => {
     return stringify(diffVerser(parseFile1,parseFile2))
     }
 
-  // module.exports = genDiff;
