@@ -8,7 +8,7 @@ const diffVerser = (data1, data2) => {
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
     const unionKeys = _.union(keys1, keys2); 
-    const sortedKeys = _.sortBy((unionKeys), key => key);
+    const sortedKeys = _.sortBy(unionKeys)
     const result = {};
     for (const key of sortedKeys) {
       if (!Object.hasOwn(data1, key)) {

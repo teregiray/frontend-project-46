@@ -8,11 +8,17 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 describe('genDiff', () => {
-    test("difference from plain objects", () => {
+    test("difference from plain json", () => {
         const filePath1 = getFixturePath('file1.json');
         const filePath2 = getFixturePath('file2.json');
         const expectedResult = readFile('expected_file.json');
         expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
     });
+    test("difference from plain yaml", () => {
+        const filePath1 = getFixturePath('file1.yml');
+        const filePath2 = getFixturePath('file2.yml');
+        const expectedResult = readFile('expected_file.json');
+        expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
+    })
 });
 
