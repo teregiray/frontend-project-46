@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 
-import { parser } from "./parsers.js";
+import  parser  from "./parsers.js";
  
 const diffVerser = (data1, data2) => {
 
