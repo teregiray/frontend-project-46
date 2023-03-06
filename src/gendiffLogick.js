@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "fs";
-
 import _ from "lodash";
+
+import { parser } from "./parsers.js";
  
 const diffVerser = (data1, data2) => {
+
     const keys1 = Object.keys(data1);
     const keys2 = Object.keys(data2);
     const unionKeys = _.union(keys1, keys2); 
@@ -48,10 +49,7 @@ const diffVerser = (data1, data2) => {
   };
 
   export default function genDiff (filepath1, filepath2) {
-    const file1 = readFileSync(filepath1, "utf-8");
-    const file2 = readFileSync(filepath2, "utf-8");
-    const parseFile1 = JSON.parse(file1);
-    const parseFile2 = JSON.parse(file2);
+    const parseFile1 = parser(filepath1);
+    const parseFile2 = parser(filepath2);
     return stringify(diffVerser(parseFile1,parseFile2))
     }
-
