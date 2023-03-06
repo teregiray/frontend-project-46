@@ -10,6 +10,14 @@ Project description: It's my second Hexlet js project
 ```bash
 make install
 ```
+## gendiff -h
+
+To run the helper:
+```bash
+gendiff -h
+```
+
+[![asciicast](https://asciinema.org/a/565091.svg)](https://asciinema.org/a/565091)
 
 ## Start to see differences in the json files
 
@@ -17,6 +25,7 @@ To run the game:
 ```bash
 gendiff filepath1 filepath2
 ```
+
 
 ## gendiff 
 [![asciicast](https://asciinema.org/a/b0H27XpNVV6QfDvoXyjReEE1a.svg)](https://asciinema.org/a/b0H27XpNVV6QfDvoXyjReEE1a)
