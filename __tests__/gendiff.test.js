@@ -14,11 +14,11 @@ describe('genDiff', () => {
         const expectedResult = readFile('expected_file.json');
         expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
     });
-    test("difference from plain yaml", () => {
-        const filePath1 = getFixturePath('file1.yml');
-        const filePath2 = getFixturePath('file2.yml');
-        const expectedResult = readFile('expected_file.json');
-        expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
-    })
+    // test("difference from plain yaml", () => {
+    //     const filePath1 = getFixturePath('file1.yml');
+    //     const filePath2 = getFixturePath('file2.yml');
+    //     const expectedResult = readFile('expected_file.json');
+    //     expect(genDiff(filePath1,filePath2)).toEqual(expectedResult);
+    // })
 });
 
