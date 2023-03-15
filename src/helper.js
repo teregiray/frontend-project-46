@@ -1,13 +1,6 @@
 import _ from "lodash";
 
-const getSortedUnionKeys = (obj1, obj2) => {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  const unionKeys = _.union(keys1, keys2);
-  const sortedKeys = _.sortBy(unionKeys);
-  return sortedKeys;
-};
-
+const getSortedUnionKeys = (obj1, obj2) => _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
 
 export const plainDiff = (data1, data2) => {
   const sortedKeys = getSortedUnionKeys(data1, data2);
