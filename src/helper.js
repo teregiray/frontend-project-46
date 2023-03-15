@@ -1,27 +1,28 @@
 import _ from "lodash";
 
 export const plainDiff = (data1, data2) => {
-
-    const keys1 = Object.keys(data1);
-    const keys2 = Object.keys(data2);
-    const unionKeys = _.union(keys1, keys2); 
-    const sortedKeys = _.sortBy(unionKeys)
-    const result = {};
-    for (const key of sortedKeys) {
-      if (!Object.hasOwn(data1, key)) {
-        result[`${'+'}  ${key}`] = data2[key];
-      } else if (!Object.hasOwn(data2, key)) {
-        result[`${'-'}  ${key}`] = data1[key];
-      } else if (data1[key] === data2[key]) {
-        result[`${' '}  ${key}`] = data1[key]; 
-      } else if (data1[key] !== data2[key]) {
-        result[`${'-'}  ${key}`] = data1[key];
-        result[`${'+'}  ${key}`] = data2[key];
-      } 
+  const keys1 = Object.keys(data1);
+  const keys2 = Object.keys(data2);
+  const unionKeys = _.union(keys1, keys2); 
+  const sortedKeys = _.sortBy(unionKeys)
+  const result = sortedKeys.reduce((acc, key) => {
+    if (!Object.hasOwn(data1, key)) {
+      return { ...acc, [`${'+'}  ${key}`]: data2[key] };
+    } else if (!Object.hasOwn(data2, key)) {
+      return { ...acc, [`${'-'}  ${key}`]: data1[key] };
+    } else if (data1[key] === data2[key]) {
+      return { ...acc, [`${' '}  ${key}`]: data1[key] };
+    } else if (data1[key] !== data2[key]) {
+      return {
+        ...acc,
+        [`${'-'}  ${key}`]: data1[key],
+        [`${'+'}  ${key}`]: data2[key],
+      };
     }
-  
-    return result
-  };
+    return acc;
+  }, {});
+  return result;
+};
   export const stringify = (value, replacer = ' ', spacesCount = 1) => {
     const iter = (currentValue, depth) => {
       if (typeof currentValue !== 'object' || currentValue === null) {
@@ -36,9 +37,114 @@ export const plainDiff = (data1, data2) => {
       return [
         '{',
         ...lines,
-        `${bracketIndent}}`,  
+        `${bracketIndent}}`,
       ].join('\n');
     };
   
     return iter(value, 1);
-  }; 
+  };
+  export const diffNested = (data1, data2) => {
+    const buildDiff = (obj1, obj2, depth = 1) => {
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+      const unionKeys = _.union(keys1, keys2);
+      const sortedKeys = _.sortBy(unionKeys);
+      const result = sortedKeys.reduce((acc, key) => {
+        const val1 = obj1[key];
+        const val2 = obj2[key];
+        if (_.isObject(val1) && _.isObject(val2)) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${key}`]: buildDiff(val1, val2, depth + 1),
+          };
+        } else if (_.isObject(val1) && _.isObject(val2) && _.isEqual(Object.keys(val1).sort(), Object.keys(val2).sort())) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${key}`]: plainDiff(val1, val2),
+          };
+        } else if (!Object.hasOwn(obj1, key)) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2,
+          };
+        } else if (!Object.hasOwn(obj2, key)) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1,
+          };
+        } else if (_.isEqual(val1, val2)) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${' '} ${key}`]: val1,
+          };
+        } else {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1,
+            [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2,
+          };
+        }
+      }, {});
+      return result;
+    };
+  
+    return buildDiff(data1, data2);
+  };
+  const data1 = {
+    "common": {
+      "setting1": "Value 1",
+      "setting2": 200,
+      "setting3": true,
+      "setting6": {
+        "key": "value",
+        "doge": {
+          "wow": ""
+        }
+      }
+    },
+    "group1": {
+      "baz": "bas",
+      "foo": "bar",
+      "nest": {
+        "key": "value"
+      }
+    },
+    "group2": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  }
+const data2 = {
+    "common": {
+      "follow": false,
+      "setting1": "Value 1",
+      "setting3": null,
+      "setting4": "blah blah",
+      "setting5": {
+        "key5": "value5"
+      },
+      "setting6": {
+        "key": "value",
+        "ops": "vops",
+        "doge": {
+          "wow": "so much"
+        }
+      }
+    },
+    "group1": {
+      "foo": "bar",
+      "baz": "bars",
+      "nest": "str"
+    },
+    "group3": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  } 
+  console.log(stringify(diffNested(data1, data2)));
