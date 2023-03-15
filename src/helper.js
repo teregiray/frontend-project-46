@@ -44,6 +44,7 @@ export const plainDiff = (data1, data2) => {
   };
   export const diffNested = (data1, data2) => {
     const iter = (obj1, obj2, depth = 1) => {
+      const indentSize = 4;
       const sortedKeys = getSortedUnionKeys(obj1, obj2);
       return sortedKeys.reduce((acc, key) => {
         const val1 = obj1[key];
@@ -53,19 +54,19 @@ export const plainDiff = (data1, data2) => {
           if (_.isEmpty(nestedDiff)) {
             return acc;
           }
-          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${key}`]: nestedDiff };
+          return { ...acc, [`${' '.repeat((depth - 1) * indentSize)}${key}`]: nestedDiff };
         }
         if (!Object.hasOwn(obj1, key)) {
-          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2 };
+          return { ...acc, [`${' '.repeat((depth - 1) * indentSize)}${'+'} ${key}`]: val2 };
         }
         if (!Object.hasOwn(obj2, key)) {
-          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1 };
+          return { ...acc, [`${' '.repeat((depth - 1) * indentSize)}${'-'} ${key}`]: val1 };
         }
         if (!_.isEqual(val1, val2)) {
           return {
             ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1,
-            [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2,
+            [`${' '.repeat((depth - 1) * indentSize)}${'-'} ${key}`]: val1,
+            [`${' '.repeat((depth - 1) * indentSize)}${'+'} ${key}`]: val2,
           };
         }
         return acc;
