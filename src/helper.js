@@ -52,43 +52,31 @@ export const plainDiff = (data1, data2) => {
   export const diffNested = (data1, data2) => {
     const iter = (obj1, obj2, depth = 1) => {
       const sortedKeys = getSortedUnionKeys(obj1, obj2);
-      const result = sortedKeys.reduce((acc, key) => {
+      return sortedKeys.reduce((acc, key) => {
         const val1 = obj1[key];
         const val2 = obj2[key];
         if (_.isObject(val1) && _.isObject(val2)) {
-          return {
-            ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${key}`]: iter(val1, val2, depth + 1),
-          };
-        } else if (_.isObject(val1) && _.isObject(val2) && _.isEqual(Object.keys(val1).sort(), Object.keys(val2).sort())) {
-          return {
-            ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${key}`]: plainDiff(val1, val2),
-          };
-        } else if (!Object.hasOwn(obj1, key)) {
-          return {
-            ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2,
-          };
-        } else if (!Object.hasOwn(obj2, key)) {
-          return {
-            ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1,
-          };
-        } else if (_.isEqual(val1, val2)) {
-          return {
-            ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${' '} ${key}`]: val1,
-          };
-        } else {
+          const nestedDiff = iter(val1, val2, depth + 1);
+          if (_.isEmpty(nestedDiff)) {
+            return acc;
+          }
+          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${key}`]: nestedDiff };
+        }
+        if (!Object.hasOwn(obj1, key)) {
+          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2 };
+        }
+        if (!Object.hasOwn(obj2, key)) {
+          return { ...acc, [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1 };
+        }
+        if (!_.isEqual(val1, val2)) {
           return {
             ...acc,
             [`${' '.repeat((depth - 1) * 4)}${'-'} ${key}`]: val1,
             [`${' '.repeat((depth - 1) * 4)}${'+'} ${key}`]: val2,
           };
         }
+        return acc;
       }, {});
-      return result;
     };
   
     return iter(data1, data2);
