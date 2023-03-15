@@ -1,10 +1,16 @@
 import _ from "lodash";
 
+const getSortedUnionKeys = (obj1, obj2) => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  const unionKeys = _.union(keys1, keys2);
+  const sortedKeys = _.sortBy(unionKeys);
+  return sortedKeys;
+};
+
+
 export const plainDiff = (data1, data2) => {
-  const keys1 = Object.keys(data1);
-  const keys2 = Object.keys(data2);
-  const unionKeys = _.union(keys1, keys2); 
-  const sortedKeys = _.sortBy(unionKeys)
+  const sortedKeys = getSortedUnionKeys(data1, data2);
   const result = sortedKeys.reduce((acc, key) => {
     if (!Object.hasOwn(data1, key)) {
       return { ...acc, [`${'+'}  ${key}`]: data2[key] };
@@ -44,18 +50,15 @@ export const plainDiff = (data1, data2) => {
     return iter(value, 1);
   };
   export const diffNested = (data1, data2) => {
-    const buildDiff = (obj1, obj2, depth = 1) => {
-      const keys1 = Object.keys(obj1);
-      const keys2 = Object.keys(obj2);
-      const unionKeys = _.union(keys1, keys2);
-      const sortedKeys = _.sortBy(unionKeys);
+    const iter = (obj1, obj2, depth = 1) => {
+      const sortedKeys = getSortedUnionKeys(obj1, obj2);
       const result = sortedKeys.reduce((acc, key) => {
         const val1 = obj1[key];
         const val2 = obj2[key];
         if (_.isObject(val1) && _.isObject(val2)) {
           return {
             ...acc,
-            [`${' '.repeat((depth - 1) * 4)}${key}`]: buildDiff(val1, val2, depth + 1),
+            [`${' '.repeat((depth - 1) * 4)}${key}`]: iter(val1, val2, depth + 1),
           };
         } else if (_.isObject(val1) && _.isObject(val2) && _.isEqual(Object.keys(val1).sort(), Object.keys(val2).sort())) {
           return {
@@ -88,7 +91,7 @@ export const plainDiff = (data1, data2) => {
       return result;
     };
   
-    return buildDiff(data1, data2);
+    return iter(data1, data2);
   };
   const data1 = {
     "common": {

@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import  parser  from "./parsers.js";
-import { stringify } from "./helper.js";
-import { diffNested } from "./experience.js";
+import { stringify, diffNested } from "./helper.js";
   
 
   export default function genDiff (filepath1, filepath2) {
