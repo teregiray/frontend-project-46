@@ -67,6 +67,13 @@ export const plainDiff = (data1, data2) => {
             [`${' '.repeat((depth - 1) * indentSize)}${'-'} ${key}`]: val1,
             [`${' '.repeat((depth - 1) * indentSize)}${'+'} ${key}`]: val2,
           };
+          
+        }
+        if (_.isEqual(val1, val2)) {
+          return {
+            ...acc,
+            [`${' '.repeat((depth - 1) * indentSize)}${' '} ${key}`]: val1,
+          };
         }
         return acc;
       }, {});
