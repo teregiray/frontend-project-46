@@ -4,7 +4,7 @@ import  parser  from "./parsers.js";
 import { stringify, diffNested } from "./helper.js";
   
 
-  export default function genDiff (filepath1, filepath2, option) {
+  export default function genDiff (filepath1, filepath2, option = "stylish") {
     if(option !== "stylish") {
       return "Error, this style is not available, choose another one"
     }
