@@ -1,8 +1,8 @@
 import formatStylish from './stylish.js'; 
 const formatters = {
   stylish: formatStylish,
-  plain: '';
-  json: '';
+  plain: '',
+  json: ''
 };
 
 export default (ast, type) => {

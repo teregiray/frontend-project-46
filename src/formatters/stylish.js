@@ -1,13 +1,6 @@
-import _, { map, values } from "lodash";
+import _ from "lodash";
 
 const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
-
-const stringify = (data, depth, mapping) => {
-  if (!_.isObject(data)) {
-    return String(data);
-  };
-  const output = Object.entries(data)
-  .map(([key, value]) => mapping.unchanged({ key, value}, depth +1));
 
   const mapping = {
     root: ( { children }, depth, iter ) => {
@@ -29,7 +22,14 @@ const stringify = (data, depth, mapping) => {
       return [data1, data2]
     }
   }
-}
+
+  const stringify = (data, depth, mapping) => {
+    if (!_.isObject(data)) {
+      return String(data);
+    };
+    const output = Object.entries(data)
+    .map(([key, value]) => mapping.unchanged({ key, value}, depth +1));
+  };
 const renderTree = (ast) => {
   const iter = (node, depth) => { mapping[node.type](node, depth, iter);
     return iter(ast, 0)
