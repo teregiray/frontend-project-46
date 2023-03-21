@@ -46,7 +46,7 @@ export const plainDiff = (data1, data2) => {
       const sortedKeys = getSortedUnionKeys(obj1, obj2);
       return sortedKeys.reduce((acc, key) => {
         const val1 = obj1[key];
-        const val2 = obj2[key];
+        const val2 = obj2[key]; 
         if (_.isObject(val1) && _.isObject(val2)) {
           const nestedDiff = iter(val1, val2, depth + 1);
           return { ...acc, [`${' '.repeat((depth - 1) * indentSize)}${key}`]: nestedDiff };
