@@ -41,7 +41,7 @@ export const plainDiff = (data1, data2) => {
   
     return iter(value, 1);
   };
-  export const diffNested = (data1, data2) => {
+  export const diffNested = (data1, data2,) => {
     const iter = (obj1, obj2, depth = 1, indentSize = 4,) => {
       const sortedKeys = getSortedUnionKeys(obj1, obj2);
       return sortedKeys.reduce((acc, key) => {
