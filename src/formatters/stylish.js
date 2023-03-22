@@ -4,11 +4,12 @@ const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
 
 const stringify = (data, depth, mapping) => {
   if (!_.isObject(data)) {
+
     return String(data);
-  };
+  }
   const output = Object.entries(data)
   .map(([key, value]) => mapping.unchanged({ key, value}, depth +1));
-  console.log(output)
+  
   return `{\n${output.join('\n')}\n${indent(depth)}`;
 };
 
