@@ -8,7 +8,7 @@ const stringify = (data, depth, mapping) => {
   };
   const output = Object.entries(data)
   .map(([key, value]) => mapping.unchanged({ key, value}, depth +1));
-
+  console.log(output)
   return `{\n${output.join('\n')}\n${indent(depth)}`;
 };
 
@@ -28,16 +28,14 @@ const stringify = (data, depth, mapping) => {
       const { key, value1, value2 } = node;
       const data1 = `${indent(depth)}- ${key}: ${stringify(value1, depth, mapping)}`;
       const data2 = `${indent(depth)}+ ${key}: ${stringify(value2, depth, mapping)}`;
-
       return [data1, data2]
     }
   }
 
 
 const renderTree = (ast) => {
-  const iter = (node, depth) => { mapping[node.type](node, depth, iter);
+  const iter = (node, depth) =>  mapping[node.type](node, depth, iter);
     return iter(ast, 0)
-
   };
-};
+
 export default renderTree;

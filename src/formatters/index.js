@@ -1,6 +1,6 @@
-import formatStylish from './stylish.js'; 
+import renderTree from './stylish.js'; 
 const formatters = {
-  stylish: formatStylish,
+  stylish: renderTree,
   plain: '',
   json: ''
 };

@@ -13,7 +13,6 @@ const genDiff = (path1, path2, formatName = 'stylish') => {
   const data2 = getData(buildPath(path2));
 
   const tree = buildTree(data1, data2);
-
   return format(tree, formatName);
 };
 export default genDiff
