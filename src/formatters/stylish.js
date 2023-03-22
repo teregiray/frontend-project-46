@@ -11,9 +11,9 @@ const indent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
     const output = children.flatMap((node) => mapping[node.type](node, depth +1, iter));
     return `${indent(depth)} ${key}: {\n${output.join('\n')}\n${indent(depth)}}`;
     },
-    added: (node , depth) => `${indent(depth)}+ ${node.key}: ${stringify(node, depth, mapping)}`,
-    deleted: (node , depth) => `${indent(depth)}- ${node.key}: ${stringify(node, depth, mapping)}`,
-    unchanged: (node , depth) => `${indent(depth)} ${node.key}: ${stringify(node, depth, mapping)}`,
+    added: (node , depth) => `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth, mapping)}`,
+    deleted: (node , depth) => `${indent(depth)}- ${node.key}: ${stringify(node.value, depth, mapping)}`,
+    unchanged: (node , depth) => `${indent(depth)} ${node.key}: ${stringify(node.value, depth, mapping)}`,
     changed: (node, depth) => {
       const { key, value1, value2 } = node;
       const data1 = `${indent(depth)}- ${key}: ${stringify(value1, depth, mapping)}`;
