@@ -2,7 +2,7 @@ import renderTree from './stylish.js';
 const formatters = {
   stylish: renderTree,
   plain: '',
-  json: ''
+  json: JSON.stringify
 };
 
 export default (ast, type) => {

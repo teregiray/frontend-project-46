@@ -1,4 +1,4 @@
-import genDiff from '../src/gendiffLogick.js';
+import genDiff from '../src/index.js';
 import { fileURLToPath } from 'url';
 import * as path from 'path'
 import { readFileSync } from 'fs';
