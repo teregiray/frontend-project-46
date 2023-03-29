@@ -29,13 +29,6 @@ if (data === ''){
     unchanged: (node , depth) => `${indent(depth)}  ${node.key}: ${stringify(node.value, depth, mapping)}`,
     changed: (node, depth) => {
       const { key, value1, value2 } = node;
-      
-if (stringify(value1, depth, mapping) === '')
-{
-  const data1 = `${indent(depth)}- ${key}:${stringify(value1, depth, mapping)}`;
-  const data2 = `${indent(depth)}+ ${key}: ${stringify(value2, depth, mapping)}`;
-  return [data1, data2]
-} 
 
   const data1 = `${indent(depth)}- ${key}: ${stringify(value1, depth, mapping)}`;
   const data2 = `${indent(depth)}+ ${key}: ${stringify(value2, depth, mapping)}`;
