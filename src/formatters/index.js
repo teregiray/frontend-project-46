@@ -1,15 +1,16 @@
 import renderNested from './stylish.js';
-import renderPlain from './plain.js'; 
+import renderPlain from './plain.js';
+
 const formatters = {
   stylish: renderNested,
   plain: renderPlain,
-  json: JSON.stringify
+  json: JSON.stringify,
 };
 
 export default (ast, type) => {
   const format = formatters[type];
-  if(!format) {
+  if (!format) {
     throw new Error(`Unknown format ${type}`);
   }
   return format(ast);
-}
+};
