@@ -22,5 +22,11 @@ describe('genDiff', () => {
         const result = genDiff(filePath1,filePath2, 'stylish');
         expect(result).toEqual(nestedResult);
     })
-});
-
+    test('json', () => {
+        const filePath1 = getFixturePath('file1.json');
+        const filePath2 = getFixturePath('file2.json');
+        const jsonResult = readFile('expected_jsonFile.json');
+        const result = genDiff(filePath1,filePath2, 'json');
+        expect(result).toEqual(jsonResult)
+      });
+    });
