@@ -27,9 +27,13 @@ gendiff filepath1 filepath2
 ```
 
 
-## gendiff 
+## simple gendiff 
 [![asciicast](https://asciinema.org/a/565094.svg)](https://asciinema.org/a/565094)
 
 
 ## tests
-[![asciicast](https://asciinema.org/a/565089.svg)](https://asciinema.org/a/565089)
+[![asciicast](https://asciinema.org/a/WHyusWNSLL7l0n4fB54o1pETR.svg)](https://asciinema.org/a/WHyusWNSLL7l0n4fB54o1pETR)
+
+## hard gendiff
+
+[![asciicast](https://asciinema.org/a/571629.svg)](https://asciinema.org/a/571629)
