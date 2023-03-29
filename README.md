@@ -22,6 +22,7 @@ gendiff -h
 
 ## Start to see differences in the json files
 
+
 To run the game:
 ```bash
 gendiff filepath1 filepath2
