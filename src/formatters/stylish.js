@@ -44,9 +44,9 @@ if (stringify(value1, depth, mapping) === '')
   }
 
 
-const renderTree = (ast) => {
+const renderNested = (ast) => {
   const iter = (node, depth) =>  mapping[node.type](node, depth, iter);
     return iter(ast, 0)
   };
 
-export default renderTree;
+export default renderNested;

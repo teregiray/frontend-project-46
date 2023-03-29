@@ -1,7 +1,8 @@
-import renderTree from './stylish.js'; 
+import renderNested from './stylish.js';
+import renderPlain from './plain.js'; 
 const formatters = {
-  stylish: renderTree,
-  plain: '',
+  stylish: renderNested,
+  plain: renderPlain,
   json: JSON.stringify
 };
 
