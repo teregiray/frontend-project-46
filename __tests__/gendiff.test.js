@@ -11,16 +11,16 @@ describe('genDiff', () => {
     test("difference from plain json", () => {
         const filePath1 = getFixturePath('file1.json');
         const filePath2 = getFixturePath('file2.json');
-        const expectedResult = readFile('expected_plain.json');
-        const result = genDiff(filePath1,filePath2)
-        expect(result).toEqual(expectedResult);
+        const plainResult = readFile('expected_plain.json');
+        const result = genDiff(filePath1,filePath2, 'plain')
+        expect(result).toEqual(plainResult);
     });
     test("difference from nested yaml", () => {
         const filePath1 = getFixturePath('file1.yml');
         const filePath2 = getFixturePath('file2.yml');
-        const expectedResult = readFile('expected_nested.json');
+        const nestedResult = readFile('expected_nested.json');
         const result = genDiff(filePath1,filePath2)
-        expect(result).toEqual(expectedResult);
+        expect(result).toEqual(nestedResult);
     })
 });
 
