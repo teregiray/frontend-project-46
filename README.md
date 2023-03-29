@@ -35,4 +35,4 @@ gendiff filepath1 filepath2
 
 ## hard gendiff
 
-[![asciicast](https://asciinema.org/a/571629.svg)](https://asciinema.org/a/571629)
+[![asciicast](https://asciinema.org/a/571686.svg)](https://asciinema.org/a/571686)
