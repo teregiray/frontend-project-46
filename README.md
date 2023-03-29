@@ -19,6 +19,7 @@ gendiff -h
 
 [![asciicast](https://asciinema.org/a/565091.svg)](https://asciinema.org/a/565091)
 
+
 ## Start to see differences in the json files
 
 To run the game:
